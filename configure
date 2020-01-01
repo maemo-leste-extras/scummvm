@@ -1681,6 +1681,7 @@ maemo-leste)
 	_host_os=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
 	_host_alias="$_host_cpu-$_host_os"
 	_host_alias=`echo $_host_alias| sed 's/v7l-unknown//'`
+    echo _host_alias
 	_host_os=maemo
 
 	# The prefix is always the same on Maemo so we hardcode the default
@@ -2018,6 +2019,7 @@ else
 	# Iterate over all candidates, pick the first working one
 	CXX=
 	for compiler in $compilers; do
+        echo $compiler
 		if test_compiler $compiler; then
 			echo "success testing compiler: $compiler" >> "$TMPLOG"
 			CXX=$compiler
