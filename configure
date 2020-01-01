@@ -1630,6 +1630,25 @@ maemo)
 	datadir=/opt/scummvm/share
 	docdir='${datarootdir}/doc/scummvm'
 	;;
+maemo-leste)
+	_host_cpu=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\1/'`
+	_host_vendor=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
+	_host_os=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
+	_host_alias="$_host_cpu-$_host_os"
+	_host_alias=`echo $_host_alias| sed 's/v7l//'`
+	_host_os=maemo
+
+	# The prefix is always the same on Maemo so we hardcode the default
+	# here. It is still possible to define a custom prefix which is
+	# needed when packaging the app with a user-specific app ID.
+	test "x$prefix" = xNONE && prefix=/opt/scummvm
+	# Maemo apps are installed into app-specific directories. The
+	# default directory structure of ScummVM makes no sense here so we
+	# hardcode Maemo specific directories here.
+	datarootdir='${prefix}/share'
+	datadir=/opt/scummvm/share
+	docdir='${datarootdir}/doc/scummvm'
+	;;
 n64)
 	_host_os=n64
 	_host_cpu=mips
@@ -2526,7 +2545,7 @@ case $_host_cpu in
 			openpandora)
 				define_in_config_if_yes yes 'USE_ARM_NEON_ASPECT_CORRECTOR'
 				;;
-			androidsdl-armeabi | arm-*riscos | caanoo | gp2x | gp2xwiz | maemo )
+			androidsdl-armeabi | arm-*riscos | caanoo | gp2x | gp2xwiz | maemo | maemo-leste )
 				define_in_config_if_yes yes 'USE_ARM_SCALER_ASM'
 				define_in_config_if_yes yes 'USE_ARM_SMUSH_ASM'
 				define_in_config_if_yes yes 'USE_ARM_GFX_ASM'
@@ -3395,6 +3414,25 @@ if test -n "$_host"; then
 			_tremor=yes
 			_zlib=yes
 			;;
+
+		maemo-leste)
+			_optimization_level=-Os
+			append_var CXXFLAGS "-fomit-frame-pointer"
+			append_var INCLUDES "-I/usr/X11R6/include"
+			append_var LIBS "-lX11"
+			append_var LIBS "-L/usr/lib"
+
+			_backend="maemo"
+			_vkeybd=yes
+			_keymapper=yes
+			_build_hq_scalers=no
+			_mt32emu=no
+			_alsa=no # XXX: do we not want alsa?
+			_mad=yes
+			_tremor=yes
+			_zlib=yes
+			_sdlconfig=sdl-config
+			;;
 		*mingw32*)
 			_sdlconfig=$_host-sdl-config
 			_windres=$_host-windres
@@ -3903,7 +3941,7 @@ case $_host_os in
 	amigaos* | cygwin* | dreamcast | ds | gamecube | mingw* | morphos | n64 | ps3 | psp2 | psp | riscos | wii)
 		_posix=no
 		;;
-	3ds | android | androidsdl | beos* | bsd* | darwin* | freebsd* | gnu* | gph-linux | haiku* | hpux* | iphone | ios7 | irix*| k*bsd*-gnu* | linux* | maemo | mint* | netbsd* | openbsd* | solaris* | sunos* | switch | uclinux*)
+	3ds | android | androidsdl | beos* | bsd* | darwin* | freebsd* | gnu* | gph-linux | haiku* | hpux* | iphone | ios7 | irix*| k*bsd*-gnu* | linux* | maemo | maemo-x86_64| mint* | netbsd* | openbsd* | solaris* | sunos* | switch | uclinux*)
 		_posix=yes
 		;;
 	os2-emx*)
