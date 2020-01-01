@@ -1680,6 +1680,7 @@ maemo-leste)
 	_host_vendor=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\2/'`
 	_host_os=`echo $guessed_host | sed 's/^\([^-]*\)-\([^-]*\)-\(.*\)$/\3/'`
 	_host_alias="$_host_cpu-$_host_os"
+	_host_alias=`echo $_host_alias| sed 's/v7l-unknown//'`
 	_host_os=maemo
 
 	# The prefix is always the same on Maemo so we hardcode the default
