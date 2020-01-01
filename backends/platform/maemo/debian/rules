@@ -6,7 +6,7 @@ build: scummvm
 
 scummvm:
 	dh_testdir
-	./configure --host=maemo-leste $(CONFIGURE_EXTRA_ARGS)
+	./configure --host=maemo-leste $(CONFIGURE_EXTRA_ARGS) --disable-engine=gob
 	$(MAKE) $(MAKE_EXTRA_ARGS)
 
 clean:
