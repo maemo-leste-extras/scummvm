@@ -33,6 +33,7 @@
 #include "backends/keymapper/action.h"
 #include "backends/keymapper/keymapper.h"
 #include "backends/keymapper/keymapper-defaults.h"
+#include "backends/keymapper/standard-actions.h"
 #include "common/textconsole.h"
 #include "common/translation.h"
 
@@ -202,7 +203,7 @@ Common::KeymapperDefaultBindings *OSystem_SDL_Maemo::getKeymapperDefaultBindings
 
 	keymapperDefaultBindings->setDefaultBinding("gui", "CLOS", "ESCAPE");
 
-	keymapperDefaultBindings->setDefaultBinding("maemo", kStandardActionRightClick, "ZOOMPLUS");
+	keymapperDefaultBindings->setDefaultBinding("maemo", Common::kStandardActionRightClick, "ZOOMPLUS");
 	keymapperDefaultBindings->setDefaultBinding("maemo", "CLKM", "ZOOMMINUS");
 
 	return keymapperDefaultBindings;
